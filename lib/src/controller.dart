@@ -22,6 +22,7 @@ final class PagedDataTableController<K extends Comparable<K>, T>
   final GlobalKey<FormState> _filtersFormKey = GlobalKey();
   late final List<int>? _pageSizes;
   late final Fetcher<K, T> _fetcher; // The function used to fetch items
+  final Function(int index, T item)? onRowTap;
   final Map<_ListenerType, dynamic> _listeners = {
     // The list of special listeners which all are functions
 
@@ -29,7 +30,9 @@ final class PagedDataTableController<K extends Comparable<K>, T>
     _ListenerType.rowChange: <int, List<RowChangeListener<K, T>>>{},
   };
   PagedDataTableConfiguration? _configuration;
-
+  PagedDataTableController({
+    this.onRowTap,
+  });
   Object?
       _currentError; // If something went wrong when fetching items, this is the latest error
   int _totalItems = 0; // the total items in the current dataset
