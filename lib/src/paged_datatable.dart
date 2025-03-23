@@ -253,7 +253,7 @@ final class _PagedDataTableState<K extends Comparable<K>, T>
         // Pass totalFixedWidth but the ColumnSize should don't care about it because its a fixed size.
         sizes[i] = column.size.calculateConstraints(totalFixedWidth);
       } else if (column.size is RemainingColumnSize) {
-        sizes[i] = remainingColumnWidth;
+        sizes[i] = remainingColumnWidth > 0 ? remainingColumnWidth : 0;
       } else {
         sizes[i] = totalFractionalWidth * column.size.fraction / totalFraction;
       }
