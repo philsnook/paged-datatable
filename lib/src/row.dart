@@ -30,15 +30,18 @@ class _RowBuilderState<K extends Comparable<K>, T>
 
   @override
   Widget build(BuildContext context) {
-    Widget child = InkWell(
-      onTap: () {
-        final rowData = controller._currentDataset[widget.index];
-        controller.onRowTap?.call(widget.index, rowData);
-      },
-      child: Row(
-          children:
-              widget.buildColumns(context, widget.index, controller, theme)),
+    final w = Row(
+      children: widget.buildColumns(context, widget.index, controller, theme),
     );
+    Widget child = controller.onRowTap == null
+        ? w
+        : InkWell(
+            onTap: () {
+              final rowData = controller._currentDataset[widget.index];
+              controller.onRowTap?.call(widget.index, rowData);
+            },
+            child: w,
+          );
     var color = theme.rowColor?.call(widget.index);
     if (selected && theme.selectedRow != null) {
       color = theme.selectedRow;
